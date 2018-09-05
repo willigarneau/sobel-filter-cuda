@@ -18,8 +18,8 @@ Mat SerialBlackAndWhite(Mat imgToConvert) {
 	int rows = imgToConvert.rows;
 	int cols = imgToConvert.cols;
 	Mat gray(rows, cols, CV_8UC1);
-	for (int r = 0; r<rows; r++) {
-		for (int c = 0; c<cols; c++) {
+	for (int r = 0; r < rows; r++) {
+		for (int c = 0; c < cols; c++) {
 			double gray_val = (int)imgToConvert.at<uchar>(r, c) + PIXEL_INCREMENTATION;
 			gray.at<uchar>(r, c) = (uchar)gray_val;
 		}

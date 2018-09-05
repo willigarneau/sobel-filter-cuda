@@ -23,7 +23,7 @@ extern "C" void ParallelBlackAndWhite(uchar *inputMatrixPointer, int pixelIncrem
 	cudaMalloc(&inputMatrixGrid, memSize);
 	cudaMalloc(&outputMatrixGrid, memSize);
 
-	// Copier de la matrice A dans la memoire du GPU 
+	// Copier de la matrice A dans la memoire du GPU
 	cudaMemcpy(inputMatrixGrid, inputMatrixPointer, memSize, cudaMemcpyHostToDevice);
 
 	// Partir le kernel
