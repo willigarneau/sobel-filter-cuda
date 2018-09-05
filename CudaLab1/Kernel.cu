@@ -12,7 +12,8 @@ __global__ void kernel(uchar *inputMatrix, int pixelIncrementation, uchar *outpu
 	int cudaIndex = noRow * dim + noCol;
 	outputMatrix[cudaIndex] = inputMatrix[cudaIndex] + pixelIncrementation;
 }
-extern "C" void ParallelBlackAndWhite(uchar *pMatA, int pixelIncrementation, uchar *pMatR, dim3 matrixDimension)
+
+extern "C" void ParallelBlackAndWhite(uchar *inputMatrixPointer, int pixelIncrementation, uchar *outputMatrixPointer, dim3 matrixDimension)
 {
 	uchar *inputMatrixGrid, *outputMatrixGrid;
 	dim3 dimBlock(BLOCK_SIZE, BLOCK_SIZE);
@@ -23,13 +24,13 @@ extern "C" void ParallelBlackAndWhite(uchar *pMatA, int pixelIncrementation, uch
 	cudaMalloc(&outputMatrixGrid, memSize);
 
 	// Copier de la matrice A dans la memoire du GPU 
-	cudaMemcpy(inputMatrixGrid, pMatA, memSize, cudaMemcpyHostToDevice);
+	cudaMemcpy(inputMatrixGrid, inputMatrixPointer, memSize, cudaMemcpyHostToDevice);
 
 	// Partir le kernel
 	kernel<<<dimGrid, dimBlock>>>(inputMatrixGrid, pixelIncrementation, outputMatrixGrid);
 
 	// Transfert de la matrice résultat 
-	cudaMemcpy(pMatR, outputMatrixGrid, memSize, cudaMemcpyDeviceToHost);
+	cudaMemcpy(outputMatrixPointer, outputMatrixGrid, memSize, cudaMemcpyDeviceToHost);
 
 	cudaFree(inputMatrixGrid);
 	cudaFree(outputMatrixGrid);

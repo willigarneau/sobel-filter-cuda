@@ -12,7 +12,7 @@ const int PIXEL_INCREMENTATION = 100;
 
 using namespace cv;
 
-extern "C" void ParallelBlackAndWhite(uchar *pMatA, int pixelIncrementation, uchar *pMatR, dim3 matrixDimension);
+extern "C" void ParallelBlackAndWhite(uchar *inputMatrixPointer, int pixelIncrementation, uchar *outputMatrixPointer, dim3 matrixDimension);
 
 Mat SerialBlackAndWhite(Mat imgToConvert) {
 	int rows = imgToConvert.rows;
