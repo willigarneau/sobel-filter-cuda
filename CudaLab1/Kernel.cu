@@ -26,7 +26,7 @@ extern "C" void ParallelBlackAndWhite(uchar *pMatA, int pixelIncrementation, uch
 	cudaMemcpy(inputMatrixGrid, pMatA, memSize, cudaMemcpyHostToDevice);
 
 	// Partir le kernel
-	kernel<<<dimGrid, dimBloc>>>(inputMatrixGrid, pixelIncrementation, outputMatrixGrid);
+	kernel<<<dimGrid, dimBlock>>>(inputMatrixGrid, pixelIncrementation, outputMatrixGrid);
 
 	// Transfert de la matrice résultat 
 	cudaMemcpy(pMatR, outputMatrixGrid, memSize, cudaMemcpyDeviceToHost);

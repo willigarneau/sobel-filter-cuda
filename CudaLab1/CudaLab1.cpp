@@ -10,7 +10,7 @@
 #include <opencv2/imgproc/types_c.h> 
 #include <opencv2/imgproc/imgproc.hpp> 
 
-const int PIXEL_INCREMENTATION = 60;
+const int PIXEL_INCREMENTATION = 100;
 
 using namespace cv;
 
@@ -22,8 +22,7 @@ Mat SerialBlackAndWhite(Mat imgToConvert) {
 	Mat gray(rows, cols, CV_8UC1);
 	for (int r = 0; r<rows; r++) {
 		for (int c = 0; c<cols; c++) {
-			int bgr = (int)imgToConvert.at<uchar>(r, c);
-			double gray_val = bgr + PIXEL_INCREMENTATION;
+			double gray_val = (int)imgToConvert.at<uchar>(r, c) + PIXEL_INCREMENTATION;
 			gray.at<uchar>(r, c) = (uchar)gray_val;
 		}
 	}
