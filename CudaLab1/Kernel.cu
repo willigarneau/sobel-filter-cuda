@@ -5,7 +5,7 @@ int const BLOCK_SIZE = 32;
 
 typedef unsigned char uchar;
 
-__global__ void kernel(uchar *inputMatrix, int pixelIncrementation, uchar *outputMatrix) {
+__global__ void ParallelBlackAndWhite_kernel(uchar *inputMatrix, int pixelIncrementation, uchar *outputMatrix) {
 	int noCol = blockIdx.x  * blockDim.x + threadIdx.x;
 	int noRow = blockIdx.y  * blockDim.y + threadIdx.y;
 	int dim = blockDim.x * gridDim.x;
@@ -27,7 +27,7 @@ extern "C" void ParallelBlackAndWhite(uchar *inputMatrixPointer, int pixelIncrem
 	cudaMemcpy(inputMatrixGrid, inputMatrixPointer, memSize, cudaMemcpyHostToDevice);
 
 	// Partir le kernel
-	kernel<<<dimGrid, dimBlock>>>(inputMatrixGrid, pixelIncrementation, outputMatrixGrid);
+	ParallelBlackAndWhite_kernel<<<dimGrid, dimBlock>>>(inputMatrixGrid, pixelIncrementation, outputMatrixGrid);
 
 	// Transfert de la matrice résultat 
 	cudaMemcpy(outputMatrixPointer, outputMatrixGrid, memSize, cudaMemcpyDeviceToHost);
