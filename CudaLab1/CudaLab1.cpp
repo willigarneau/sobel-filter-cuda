@@ -70,7 +70,6 @@ Mat SerialSobel(Mat imgToConvert) {
 			int gradientY = yGradient(imgToConvert, currentPosition);
 			int approxGradient = (abs(gradientX) + abs(gradientY) * 255) / maximumGradient;
 			imgToConvert.at<uchar>(rows, cols) = approxGradient;
-
 		}
 	}
 	return imgToConvert;
@@ -93,6 +92,7 @@ Mat SerialBlackAndWhite(Mat imgToConvert) {
 
 int main()
 {
+	// original frame
 	Mat originalframe = imread("lena.png");
 
 	// Serial conversion to black and white (CPU)
@@ -102,6 +102,13 @@ int main()
 	// Serial conversion to sobel filter (CPU)
 	Mat serialFrameToFilter = imread("lena.png", 0);
 	Mat serialFilteredFrame = SerialSobel(serialFrameToFilter);
+
+	// Parallel conversion to sobel filter (GPU)
+	Mat inputParallelFilteredFrame = imread("lena.png", 0);
+	Mat outputParallelFilteredFrame = imread("lena.png", 0);
+	ParallelSobelFilter(inputParallelFilteredFrame.data,
+		outputParallelFilteredFrame.data, 
+		dim3(inputParallelFilteredFrame.rows, inputParallelFilteredFrame.cols));
 
 	// Parallel conversion (GPU)
 	Mat inputParallelConvertedFrame = imread("lena.png", 0);
@@ -115,6 +122,7 @@ int main()
 	imshow("original frame", originalframe);
 	imshow("serial sobel filtered frame", serialFilteredFrame);
 	imshow("serial converted frame", serialConvertedFrame);
+	imshow("parallel sobel filtered frame", outputParallelFilteredFrame);
 	imshow("parallel converted frame", outputParallelConvertedFrame);
 
 	waitKey(0);
