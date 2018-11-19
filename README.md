@@ -1,4 +1,4 @@
-# Laboratory 1 - Industrial Intelligent System
+# ASSIGNMENT 1 - Industrial Intelligent System
 
 > 🖼️ Laboratory 1 in Intelligent Industrial System at Cégep Lévis-Lauzon. Learning Cuda and OpenCV by creating a sobel filter. 💻
 
